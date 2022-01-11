@@ -134,6 +134,15 @@ class UI:
         current_q = self.game.question_set[self.game.question_index].contents
         self.canvas.itemconfigure(self.question_txt, text=current_q)
 
+        self.q_words = current_q.split()
+
+        self.iterative(0)
+
+    def iterative(self, i):
+        self.canvas.itemconfigure(self.question_txt, text=self.q_words[:i])
+        i += 1    
+        self.window.after(100, lambda: self.iterative(i))
+
     def check_answer(self):
         answer = self.answer_box.get()
         
