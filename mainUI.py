@@ -2,6 +2,7 @@ from question import *
 import tkinter as tk
 import time
 import os, sys
+from functools import *
 
 class UI:
     def __init__(self, game):
@@ -75,6 +76,8 @@ class UI:
         self.corrections.set("\n")
         tk.Label(self.question_frame, textvariable=self.corrections, bg="black", fg="white").pack()
 
+        self.has_been_called = False
+
         self.next()
 
         self.corrections.set("\n")
@@ -104,14 +107,16 @@ class UI:
         self.window.destroy()
 
     def enter_tobind(self, e):
+
         self.next()
+
+
 
     def next(self):
         if self.game.has_next():
             tempscore = 0
             if self.check_answer():
                 tempscore = 10
-                self.canvas.itemconfigure(self.question_txt, text="correct")
                 self.corrections.set("previous: correct")
             elif not self.check_answer():
                 tempscore = -5
@@ -132,16 +137,22 @@ class UI:
 
     def display_next_q(self):
         current_q = self.game.question_set[self.game.question_index].contents
-        self.canvas.itemconfigure(self.question_txt, text=current_q)
+        
 
         self.q_words = current_q.split()
 
-        self.iterative(0)
+        i = 0
 
-    def iterative(self, i):
-        self.canvas.itemconfigure(self.question_txt, text=self.q_words[:i])
-        i += 1    
-        self.window.after(100, lambda: self.iterative(i))
+        self.iterative(self.q_words, i)
+
+    def iterative(self, words, i):
+        if i > len(words):
+            return
+
+        self.canvas.itemconfigure(self.question_txt, text=words[:i])
+        
+        i += 1
+        self.window.after(150, lambda: self.iterative(words, i))
 
     def check_answer(self):
         answer = self.answer_box.get()
