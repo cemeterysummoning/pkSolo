@@ -13,3 +13,7 @@ Stats are indicated by respective markers. One correct answer gives you 10 point
 To get a new set of questions, click the 'Get new set' button in the lower box. You will be directed to a quizdb page. Once you have chosen the parameters
 for your questions, click the small window (probably labeled 'Tk #2') and click to return to your game. To restart your game with your new set of questions, click
 'Restart with new'. 
+
+### Issues
+- Interrupts and early answers cause unforseen problems
+- The grading system will be improved upon to allow for typos and alternative but correct answers
